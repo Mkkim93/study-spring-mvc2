@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<!--아래 코드 해석 (쉽게) : 현재 html 페이지에서 title 과 section 은 유지시키고 나머지 태그 양식은 layoutFile.html 에서 가져와서 덮어 씌운다.-->
+<html th:replace="~{template/layoutExtend/layoutFile :: layout(~{::title},~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인 페이지 타이틀</title>
+</head>
+<body>
+<section>
+    <p>메인 페이지 컨텐츠</p>
+    <div>메인 페이지 포함 내용</div>
+</section>
+</body>
+</html>

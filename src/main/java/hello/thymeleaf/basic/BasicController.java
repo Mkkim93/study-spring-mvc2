@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -54,7 +55,7 @@ public class BasicController {
         model.addAttribute("users", list);
         model.addAttribute("userMap", map);
 
-        return "/basic/variable";
+        return "basic/variable";
     }
 
     @GetMapping("/basic-objects")
@@ -63,7 +64,7 @@ public class BasicController {
         model.addAttribute("request", request);
         model.addAttribute("response", response);
         model.addAttribute("servletContext",request.getServletContext());
-        return "/basic/basic-objects";
+        return "basic/basic-objects";
     }
 
     @Component("helloBean") // 스프링 빈의 이름을 지정 "helloBean" = 타임리프에서 호출 할 수 있다.
@@ -73,24 +74,87 @@ public class BasicController {
         }
     }
 
-    @GetMapping("/date")
+    @GetMapping("/date") // url
     public String date(Model model) {
         model.addAttribute("localDateTime", LocalDateTime.now());
-        return "/basic/date";
+        return "basic/date"; // html 페이지 뷰 렌더링
     }
 
     @GetMapping("link")
     public String link(Model model) {
         model.addAttribute("param1", "data1");
         model.addAttribute("param2", "data2");
-        return "/basic/link";
+        return "basic/link";
     }
 
     @GetMapping("/literal")
     public String literal(Model model) {
         model.addAttribute("data", "Spring!");
-        return "/basic/literal";
+        return "basic/literal";
     }
+
+    @GetMapping("/operation")
+    public String operation(Model model) {
+        model.addAttribute("nullData", null);
+        model.addAttribute("data", "Spring!");
+        return "/basic/operation";
+    }
+
+    @GetMapping("/attribute")
+    public String attribute(Model model) {
+
+        return "basic/attribute";
+    }
+
+    @GetMapping("/each")
+    public String each(Model model) {
+
+        addUsers(model);
+        return "basic/each";
+    }
+
+    private void addUsers(Model model) {
+        List<User> list = new ArrayList<>();
+        list.add(new User("UserA", 10));
+        list.add(new User("UserB", 20));
+        list.add(new User("UserC", 30));
+
+        model.addAttribute("users", list);
+    }
+
+    @GetMapping("/condition")
+    public String condition(Model model) {
+        addUsers(model);
+
+        return "basic/condition";
+    }
+
+    @GetMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("data", "Spring!");
+
+        return "basic/comments";
+    }
+
+    @GetMapping("/block")
+    public String block(Model model) {
+
+        addUsers(model);
+
+        return "basic/block";
+    }
+
+    @GetMapping("/javascript")
+    public String javascript(Model model) {
+
+        model.addAttribute("user", new User("UserA", 10));
+        model.addAttribute("user", new User("UserB", 20));
+        addUsers(model);
+
+        return "basic/javascript";
+    }
+
+
 
     @Data
     static class User {
